@@ -25,8 +25,10 @@ Flutter/app.zip
 Flutter/flutter_assets/
 Flutter/flutter_export_environment.sh
 ServiceDefinitions.json
-Runner/GeneratedPluginRegistrant.*
-
+ServiceDefinitions.json
+GoogleService-info.plist
+GeneratedPluginRegistrant.*
+Environment.swift
 # Exceptions to above rules.
 !default.mode1v3
 !default.mode2v3

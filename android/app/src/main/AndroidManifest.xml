@@ -6,7 +6,7 @@
         <!--android:name="io.flutter.embedding.android.geo.API_KEY"-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCb7BPrd7skZtbrTwBKfa2Sfhmu3vok75A"/>
+            android:value="${googleMapApiKey}"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

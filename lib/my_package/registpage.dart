@@ -11,8 +11,8 @@ class _RegisterPageState extends State<RegisterPage> {
   // メッセージ表示用
   String infoText = '';
   // 入力したメールアドレス・パスワード
-  String email = '';
-  String password = '';
+  String _email = '';
+  String _password = '';
   String userName = '';
 
   @override
@@ -29,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 decoration: InputDecoration(labelText: 'メールアドレス'),
                 onChanged: (String value) {
                   setState(() {
-                    email = value;
+                    _email = value;
                   });
                 },
               ),
@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 obscureText: true,
                 onChanged: (String value) {
                   setState(() {
-                    password = value;
+                    _password = value;
                   });
                 },
               ),
@@ -58,8 +58,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       // メール/パスワードでユーザ登録
                       final FirebaseAuth auth = FirebaseAuth.instance;
                       await auth.createUserWithEmailAndPassword(
-                        email: email,
-                        password: password,
+                        email: _email.trim(),
+                        password: _password.trim(),
                       );
 
                       // ユーザー登録に成功した場合
@@ -82,14 +82,15 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               Container(
                 width: double.infinity,
-                // ユーザー登録ボタン
+                // 戻るボタン
                 child: ElevatedButton(
                   child: Text('戻る'),
                   onPressed: () async {
-                    await Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) {
-                        return TopPage();
-                      }),
+                    //await 
+                    Navigator.of(context).pop(
+                      //MaterialPageRoute(builder: (context) {
+                        //return TopPage();
+                     // }),
                     );
                   },
                 ),

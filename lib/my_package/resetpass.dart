@@ -1,19 +1,18 @@
 import '/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'sample.dart';
 
-class LoginPage extends StatefulWidget {
+class ResetPass extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ResetPassState createState() => _ResetPassState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ResetPassState extends State<ResetPass> {
   // メッセージ表示用
   String infoText = '';
   // 入力したメールアドレス・パスワード
   String _email = '';
-  String _password = '';
+  String userName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +33,6 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               // パスワード入力
-              TextFormField(
-                decoration: InputDecoration(labelText: 'パスワード'),
-                obscureText: true,
-                onChanged: (String value) {
-                  setState(() {
-                    _password = value;
-                  });
-                },
-              ),
               Container(
                 padding: EdgeInsets.all(8),
                 // メッセージ表示
@@ -52,31 +42,26 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 // ユーザー登録ボタン
                 child: ElevatedButton(
-                  child: Text('ログイン'),
+                  child: Text('パスワード再設定(email入力後、gmailにパスワードの再設定メールが送られます)'),
                   onPressed: () async {
                     try {
-                      // メール/パスワードでログイン
+                      // メール/パスワードでユーザ登録
                       final FirebaseAuth auth = FirebaseAuth.instance;
-                      await auth.signInWithEmailAndPassword(
-                        email:_email.trim(),
-                        password: _password.trim(),
+                      await auth.sendPasswordResetEmail(
+                        email: _email.trim(),
                       );
+
                       // ユーザー登録に成功した場合
-                      setState(() {
-                        infoText = "ログインに成功しました";
-                      });
                       await Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) {
-                          return SaHomePage();
+                          return TopPage();
                         }),
                       );
                     } catch (e) {
                       // ユーザー登録に失敗した場合
-
                       setState(() {
-                        infoText = "ログインに失敗しました：${e.toString()}";
+                        infoText = "登録に失敗しました：${e.toString()}";
                       });
-          
                     }
                   },
                 ),
@@ -89,12 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                 // 戻るボタン
                 child: ElevatedButton(
                   child: Text('戻る'),
-                  onPressed: ()async {
+                  onPressed: () async {
                     //await 
                     Navigator.of(context).pop(
                       //MaterialPageRoute(builder: (context) {
                         //return TopPage();
-                      //}),
+                     // }),
                     );
                   },
                 ),

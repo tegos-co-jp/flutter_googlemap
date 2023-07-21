@@ -77,14 +77,11 @@ class _SaHomePageState extends State<SaHomePage> {
               child: Text('Googlemapへ'),
               onPressed: () async {
                 try {
-                  // メール/パスワードでログイン
-                  //final FirebaseAuth auth = FirebaseAuth.instance;
-                  //await auth.signOut();
-                  // ユーザー登録に成功した場合
+                  // Googlemapへ
                   setState(() {
                     infoText = "Googlemapへ";
                   });
-                  await Navigator.of(context).pushReplacement(
+                  await Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) {
                           return MaSample();
                         }),
@@ -105,7 +102,7 @@ class _SaHomePageState extends State<SaHomePage> {
                   // メール/パスワードでログイン
                   final FirebaseAuth auth = FirebaseAuth.instance;
                   await auth.signOut();
-                  // ユーザー登録に成功した場合
+                  // ログアウト
                   setState(() {
                     infoText = "ログアウトしました。";
                   });
@@ -121,6 +118,7 @@ class _SaHomePageState extends State<SaHomePage> {
                   setState(() {
                     infoText = "失敗しました：${e.toString()}";
                   });
+                  
                 }
               },
             ),

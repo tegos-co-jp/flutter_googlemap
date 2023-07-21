@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'sample.dart';
+import '/main.dart';
+
+//import 'package:url_launcher/url_launcher.dart';
 
 class GoogleSignin extends StatelessWidget {
   const GoogleSignin({Key? key}) : super(key: key);
@@ -35,13 +38,50 @@ class GoogleSignin extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               // サインイン画面を表示する
-              signInWithGoogle();
+              try{
+                final siwg =await signInWithGoogle();
               // 猫一覧画面を表示する
-              Navigator.push(
+              if (siwg !=Null){
+              await Navigator.push(
                   context, MaterialPageRoute(builder: (context) =>  SaHomePage()));
+              }else{
+                    await Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) {
+                          return TopPage();
+                        }),
+                        (route) => route.settings.name == '/home',
+                      );
+
+              }
+              }catch(e){
+                print(e);
+                 await Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) {
+                          return TopPage();
+                        }),
+                        (route) => route.settings.name == '/home',
+                      );
+              }
             },
             child: const Text('Google'),
-          )
+          ),
+           Container(
+                padding: EdgeInsets.all(8),
+              ),
+              Container(
+                width: double.infinity,
+                // ユーザー登録ボタン
+                child: ElevatedButton(
+                  child: Text('戻る'),
+                  onPressed: () async {
+                    await Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) {
+                        return TopPage();
+                      }),
+                    );
+                  },
+                ),
+              ),
         ]),
       ),
     );
